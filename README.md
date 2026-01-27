@@ -1,7 +1,7 @@
 # POS Application (Assignment Project)
 
 A minimal, production-ready POS-style application built as part of a technical assignment.  
-The goal of this project is to demonstrate clean code structure, correct decision-making, and the ability to design and deploy a working system — not to over-engineer features.
+The goal of this project is to demonstrate clean code structure, correct decision-making, and the ability to design and deploy a working system, not to over-engineer features.
 
 ---
 
