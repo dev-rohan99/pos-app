@@ -62,4 +62,12 @@ export class ProductsService {
       data: dto,
     });
   }
+
+  async remove(id: string) {
+    await this.findOne(id);
+
+    return this.prisma.product.delete({
+      where: { id },
+    });
+  }
 }
