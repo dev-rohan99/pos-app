@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -33,7 +34,7 @@ export class ProductsService {
     return this.prisma.product.findMany({ orderBy: { createdAt: 'desc' } });
   }
 
-  async getSingleProduct(id: string) {
+  async findOne(id: string) {
     const product = await this.prisma.product.findUnique({ where: { id } });
 
     if (!product) {
@@ -41,5 +42,24 @@ export class ProductsService {
     }
 
     return product;
+  }
+
+  async update(id: string, dto: UpdateProductDto) {
+    await this.findOne(id);
+
+    if (dto.sku) {
+      const existing = await this.prisma.product.findUnique({
+        where: { sku: dto.sku },
+      });
+
+      if (existing && existing.id !== id) {
+        throw new BadRequestException('SKU already exists');
+      }
+    }
+
+    return this.prisma.product.update({
+      where: { id },
+      data: dto,
+    });
   }
 }
